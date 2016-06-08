@@ -74,8 +74,8 @@ static void *start_proc(void *arg) {
 int main(int argc, char *argv[])
 {
 	//SocketClient *client = new SocketClient(argv[1], atoi(argv[2]));
-	server_addr = argv[1];
-	port = atoi(argv[2]);
+	server_addr = IP_ADDR; //argv[1];
+	port = TCPSOCK_PORT; //atoi(argv[2]);
 //	WebSockClient *client = new WebSockClient(argv[1], atoi(argv[2]));
 //	client->handshake();
 //	client->process();
