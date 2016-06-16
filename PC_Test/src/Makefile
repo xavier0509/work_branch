@@ -29,7 +29,10 @@ sha1.o:./sha1/sha1.cpp
 base64.o:./base64/base64.cpp
 	$(CC) $(CFLAGS) $(LDFLAGS) -c $<
 
-$(TARGET): $(OBJECTS) sha1.o base64.o
+logger.o:./utils/logger.cpp
+	$(CC) $(CFLAGS) $(LDFLAGS) -c $<
+	
+$(TARGET): $(OBJECTS) sha1.o base64.o logger.o
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^ $(LIBOBJECT)
 
 clean:

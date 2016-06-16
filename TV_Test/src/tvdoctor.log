@@ -1,0 +1,20 @@
+[11:10:05] [INF] File: utils/logger.cpp, Line: 160: logFile = tvdoctor.log
+[11:13:00] [INF] File: utils/logger.cpp, Line: 160: logFile = tvdoctor.log
+[14:08:37] [INF] File: utils/logger.cpp, Line: 160: logFile = tvdoctor.log
+[14:10:27] [INF] File: utils/logger.cpp, Line: 160: logFile = tvdoctor.log
+[14:11:48] [INF] File: utils/logger.cpp, Line: 160: logFile = tvdoctor.log
+[14:18:49] [INF] File: utils/logger.cpp, Line: 160: logFile = tvdoctor.log
+[14:21:24] [INF] File: utils/logger.cpp, Line: 160: logFile = tvdoctor.log
+[14:30:07] [INF] File: utils/logger.cpp, Line: 160: logFile = tvdoctor.log
+[14:30:16] [INF] File: utils/logger.cpp, Line: 160: logFile = tvdoctor.log
+[14:32:05] [INF] File: utils/logger.cpp, Line: 160: logFile = tvdoctor.log
+[16:45:41] [INF] File: utils/logger.cpp, Line: 160: logFile = tvdoctor.log
+[16:45:41] [DBG] File: SocketProcess.cpp, Line: 193: source = 0x00000000; target = 0x77bc7d45, command id =  0x00010006
+[16:45:52] [DBG] File: SocketProcess.cpp, Line: 193: source = 0x00000000; target = 0x77bc7d45, command id =  0x00010008
+[16:48:38] [DBG] File: SocketProcess.cpp, Line: 193: source = 0x00000000; target = 0x77bc7d45, command id =  0x0001000a
+[16:48:53] [INF] File: utils/logger.cpp, Line: 160: logFile = tvdoctor.log
+[16:48:53] [DBG] File: SocketProcess.cpp, Line: 193: source = 0x00000000; target = 0x77bc7d45, command id =  0x00010006
+[16:49:03] [DBG] File: SocketProcess.cpp, Line: 193: source = 0x00000000; target = 0x77bc7d45, command id =  0x00010008
+[21:01:31] [INF] File: utils/logger.cpp, Line: 160: logFile = tvdoctor.log
+[21:01:31] [DBG] File: SocketProcess.cpp, Line: 193: source = 0x00000000; target = 0x77bc7d45, command id =  0x00010006
+[21:01:43] [DBG] File: SocketProcess.cpp, Line: 193: source = 0x00000000; target = 0x77bc7d45, command id =  0x00010008

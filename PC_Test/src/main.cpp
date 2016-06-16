@@ -12,9 +12,10 @@
 #include <fcntl.h>
 #include <pthread.h>
 
-#include "WebSockClient.h"
+#include "SocketProcess.h"
 
 #include "sys_def.h"
+#include "utils/logger.h"
 
 static char *server_addr = NULL;
 static int port = 0;
@@ -39,6 +40,7 @@ static void init_daemon(const char *dir)
 	int fd = open("/dev/null", O_RDWR);
 	if (fd == -1) {
 		DEBUG("open(\"/dev/null\") failed");
+
 		return;
 	}
 
@@ -62,12 +64,6 @@ static void init_daemon(const char *dir)
 volatile static int index = 0;
 static void *start_proc(void *arg) {
 
-//	int index = *((int *)(arg));
-//	int push_id = PUSH_BEGIN + index++;
-	WebSockClient *client = new WebSockClient(server_addr, port, index++);
-
-	client->handshake();
-	client->process();
 
 	return NULL;
 }
@@ -80,18 +76,25 @@ int main(int argc, char *argv[])
 //	WebSockClient *client = new WebSockClient(argv[1], atoi(argv[2]));
 //	client->handshake();
 //	client->process();
+	std::string logfile = DEFAULT_LOG_FILE;
+	Logger::GetInstance()->initialize(logfile);
 
-	pthread_t webclient[PTHREAD_LIMIT];
-	int i = 0;
-	for(i = 0; i < PTHREAD_LIMIT; ++i) {
-		pthread_create(&(webclient[i]), NULL, start_proc, NULL);
-	}
-
-	for(i = 0; i < PTHREAD_LIMIT; ++i) {
-		//pthread_create(&(webclient[i]), NULL, start_proc, NULL);
-		pthread_join(webclient[i], 0);
-	}
-
+//	pthread_t webclient[PTHREAD_LIMIT];
+//	int i = 0;
+//	for(i = 0; i < PTHREAD_LIMIT; ++i) {
+//		pthread_create(&(webclient[i]), NULL, start_proc, NULL);
+//	}
+//
+//	for(i = 0; i < PTHREAD_LIMIT; ++i) {
+//		//pthread_create(&(webclient[i]), NULL, start_proc, NULL);
+//		pthread_join(webclient[i], 0);
+//	}
+//	WebSockClient *client = new WebSockClient(server_addr, port, index++);
+//
+//	client->handshake();
+//	client->process();
+	SocketProcess * process = new SocketProcess(server_addr, port);
+	process->process();
 
 	return 0;
 }
