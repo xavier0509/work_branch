@@ -16,6 +16,7 @@ TARGET= tv_test
 #SRCS := $(sort $(SRCS))
 #OBJECTS += $(SRCS:%.cpp=%.o)
 SRCS = $(wildcard *.cpp)
+
 OBJECTS := $(patsubst %cpp,%o,$(SRCS))
 
 all: $(TARGET)
@@ -24,7 +25,10 @@ all: $(TARGET)
 	$(CC) $(CFLAGS) $(LDFLAGS) -c $<
 
 
-$(TARGET): $(OBJECTS)
+logger.o:./utils/logger.cpp
+	$(CC) $(CFLAGS) $(LDFLAGS) -c $<
+	
+$(TARGET): $(OBJECTS) logger.o
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^ $(LIBOBJECT)
 
 clean:

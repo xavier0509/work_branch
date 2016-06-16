@@ -12,9 +12,10 @@
 #include <fcntl.h>
 #include <pthread.h>
 
-#include "TCPSockClient.h"
+#include "SocketProcess.h"
 
 #include "sys_def.h"
+#include "utils/logger.h"
 
 static char *server_addr = NULL;
 static int port = 0;
@@ -62,11 +63,6 @@ static void init_daemon(const char *dir)
 volatile static int index = 0;
 static void *start_proc(void *arg) {
 
-	TCPSockClient *client = new TCPSockClient(server_addr, port, index++);
-
-	//client->handshake();
-	client->do_register();
-	client->process();
 
 	return NULL;
 }
@@ -80,17 +76,22 @@ int main(int argc, char *argv[])
 //	client->handshake();
 //	client->process();
 
-	pthread_t webclient[PTHREAD_LIMIT];
-	int i = 0;
-	for(i = 0; i < PTHREAD_LIMIT; ++i) {
-		pthread_create(&(webclient[i]), NULL, start_proc, NULL);
-	}
+	std::string logfile = DEFAULT_LOG_FILE;
+	Logger::GetInstance()->initialize(logfile);
 
-	for(i = 0; i < PTHREAD_LIMIT; ++i) {
-		//pthread_create(&(webclient[i]), NULL, start_proc, NULL);
-		pthread_join(webclient[i], 0);
-	}
+//	pthread_t webclient[PTHREAD_LIMIT];
+//	int i = 0;
+//	for(i = 0; i < PTHREAD_LIMIT; ++i) {
+//		pthread_create(&(webclient[i]), NULL, start_proc, NULL);
+//	}
+//
+//	for(i = 0; i < PTHREAD_LIMIT; ++i) {
+//		//pthread_create(&(webclient[i]), NULL, start_proc, NULL);
+//		pthread_join(webclient[i], 0);
+//	}
 
+	SocketProcess * process = new SocketProcess(server_addr, port);
+	process->process();
 
 	return 0;
 }
