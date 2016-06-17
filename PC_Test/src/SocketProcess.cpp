@@ -143,9 +143,9 @@ void SocketProcess::process()
 						epoll_ctl(this->m_epollfd, EPOLL_CTL_DEL, event_del.data.fd,
 								&event_del);
 					} else {
-						if (0 == n) {
-							continue;
-						}
+//						if (0 == n) {
+//							continue;
+//						}
 						receiverMsg(sockfd, buf, n);
 					}
 				}
@@ -197,7 +197,7 @@ int SocketProcess::writeMsgToWebSocket(int sockfd, char *buf, int len)
 
 int SocketProcess::receiverMsg(int sockfd, char *buf, int len)
 {
-	DEBUG("receive from sockfd %d message length %d", sockfd, len);
+	LOG_DEBUG("receive from sockfd %d message length %d", sockfd, len);
 	if (0 != strstr(buf, "\r\n\r\n")) {
 		do_register(sockfd);
 	} else {
