@@ -267,13 +267,13 @@ int SocketProcess::parseDataPackage(int sockfd, char *buf, int len)
 {
 	VncDataPackage * package = new VncDataPackage((const unsigned char* )buf, len);
 	if (!package) {
+		LOG_DEBUG("socket fd = %d package data is Error", sockfd);
 		return -1;
 	}
 	unsigned int source = package->getSource();
 	unsigned int target = package->getTarget();
 	unsigned int command_id = package->getCommandId();
-	LOG_DEBUG("source = 0x%08x; target = 0x%08x, command id =  0x%08x", source,
-			target, command_id);
+	LOG_DEBUG("socket fd = %d source = 0x%08x; target = 0x%08x, command id =  0x%08x", sockfd, source, target, command_id);
 	if (SERVER_ID != source) {
 		package->setSourceAndTarget(target, source);
 		std::string returnbuf = package->getProtocolBuffer();
