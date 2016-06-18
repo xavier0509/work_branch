@@ -98,6 +98,7 @@ void SocketProcess::process()
 		if (connect(sockfd, (struct sockaddr*) &server_addr, server_addr_length) < 0) {
 			perror("connect () : \n");
 		}
+		addConnect(sockfd);
 		addfd(m_epollfd, sockfd);
 		this->do_register(sockfd);
 	}
@@ -131,6 +132,7 @@ void SocketProcess::process()
 						event_del.events = events[i].events;
 						epoll_ctl(this->m_epollfd, EPOLL_CTL_DEL, event_del.data.fd,
 								&event_del);
+						delConnect(sockfd);
 					} else {
 						if (0 == n) {
 							continue;
@@ -156,14 +158,14 @@ void SocketProcess::handshake(int sockfd) {
 	writeMsg(sockfd, buf, strlen(buf));
 }
 
-int SocketProcess::acceptConnect(int sockfd)
+int SocketProcess::addConnect(int sockfd)
 {
 	ConnectFilter *filter = new ConnectFilter(sockfd);
 	ConnectFilterManager::GetInstance()->insertConnFilterMap(sockfd, filter);
 	return 0;
 }
 
-int SocketProcess::disconnect(int sockfd)
+int SocketProcess::delConnect(int sockfd)
 {
 	ConnectFilterManager::GetInstance()->removeConnFilter(sockfd);
 	return 0;
