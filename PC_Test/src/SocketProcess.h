@@ -28,6 +28,7 @@ private:
 	int parseDataPackage(int sockfd, char *buf, int len);
 
 	int do_parseMsg(int sockfd, char *buf, int len);
+	int do_parsebuffer(int sockfd, char *buf, int len);
 
 	int do_register(int sockfd);
 	char *m_server_addr;
