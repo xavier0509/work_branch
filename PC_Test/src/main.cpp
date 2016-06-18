@@ -61,17 +61,17 @@ static void init_daemon(const char *dir)
 	}
 }
 
-volatile static int index = 0;
-static void *start_proc(void *arg) {
-
-
-	return NULL;
-}
+//volatile static int index = 0;
+//static void *start_proc(void *arg) {
+//
+//
+//	return NULL;
+//}
 
 int main(int argc, char *argv[])
 {
 	//SocketClient *client = new SocketClient(argv[1], atoi(argv[2]));
-	server_addr = IP_ADDR;
+	server_addr = (char *)IP_ADDR;
 	port = WEBSOCK_PORT; //atoi(argv[2]);
 //	WebSockClient *client = new WebSockClient(argv[1], atoi(argv[2]));
 //	client->handshake();

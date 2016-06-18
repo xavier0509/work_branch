@@ -20,57 +20,57 @@
 static char *server_addr = NULL;
 static int port = 0;
 
-static void init_daemon(const char *dir)
-{
-	int pid = fork();
-	if (pid)
-		exit(0);
-	else if (pid < 0)
-		exit(1);
+//static void init_daemon(const char *dir)
+//{
+//	int pid = fork();
+//	if (pid)
+//		exit(0);
+//	else if (pid < 0)
+//		exit(1);
+//
+//	setsid();
+//	pid = fork();
+//	if (pid)
+//		exit(0);
+//	else if (pid < 0)
+//		exit(1);
+//
+//	umask(0);
+//
+//	int fd = open("/dev/null", O_RDWR);
+//	if (fd == -1) {
+//		DEBUG("open(\"/dev/null\") failed");
+//		return;
+//	}
+//
+//	if (dup2(fd, STDIN_FILENO) == -1) {
+//		DEBUG("dup2(STDIN) failed");
+//		return;
+//	}
+//
+//	if (dup2(fd, STDOUT_FILENO) == -1) {
+//		DEBUG("dup2(STDOUT) failed");
+//		return;
+//	}
+//	if (fd > STDERR_FILENO) {
+//		if (close(fd) == -1) {
+//			DEBUG("close() failed");
+//			return;
+//		}
+//	}
+//}
 
-	setsid();
-	pid = fork();
-	if (pid)
-		exit(0);
-	else if (pid < 0)
-		exit(1);
-
-	umask(0);
-
-	int fd = open("/dev/null", O_RDWR);
-	if (fd == -1) {
-		DEBUG("open(\"/dev/null\") failed");
-		return;
-	}
-
-	if (dup2(fd, STDIN_FILENO) == -1) {
-		DEBUG("dup2(STDIN) failed");
-		return;
-	}
-
-	if (dup2(fd, STDOUT_FILENO) == -1) {
-		DEBUG("dup2(STDOUT) failed");
-		return;
-	}
-	if (fd > STDERR_FILENO) {
-		if (close(fd) == -1) {
-			DEBUG("close() failed");
-			return;
-		}
-	}
-}
-
-volatile static int index = 0;
-static void *start_proc(void *arg) {
-
-
-	return NULL;
-}
+//volatile static int index = 0;
+//static void *start_proc(void *arg) {
+//
+//
+//	return NULL;
+//}
 
 int main(int argc, char *argv[])
 {
 	//SocketClient *client = new SocketClient(argv[1], atoi(argv[2]));
-	server_addr = IP_ADDR; //argv[1];
+	server_addr = (char *)IP_ADDR; //argv[1];
 	port = TCPSOCK_PORT; //atoi(argv[2]);
 //	WebSockClient *client = new WebSockClient(argv[1], atoi(argv[2]));
 //	client->handshake();

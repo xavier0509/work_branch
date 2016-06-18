@@ -26,6 +26,11 @@
 #include "CommandId.h"
 #include "utils/logger.h"
 
+#include "PackDataReader.h"
+#include "ConnectFilter.h"
+#include "ConnectFilterManager.h"
+
+
 SocketProcess::SocketProcess(char *server_addr, int port) :
 	m_server_addr(server_addr),
 	m_port(port),
@@ -183,20 +188,36 @@ int SocketProcess::receiverMsg(int sockfd, char *buf, int len)
 {
 	DEBUG("receive from sockfd %d message length %d", sockfd, len);
 	//writeMsg(sockfd, buf, len);
-	VncDataPackage * package = new VncDataPackage((const unsigned char* )buf, len);
-	if (!package) {
-		LOG_DEBUG("socket fd = %d package data is Error", sockfd);
+	ConnectFilter *filter = ConnectFilterManager::GetInstance()->getConnFilter(sockfd);
+	if (!filter) {
 		return -1;
 	}
-	unsigned int source = package->getSource();
-	unsigned int target = package->getTarget();
-	unsigned int command_id = package->getCommandId();
-	LOG_DEBUG("socket fd = %d source = 0x%08x; target = 0x%08x, command id =  0x%08x", sockfd, source, target, command_id);
-	if (SERVER_ID != source) {
-		package->setSourceAndTarget(target, source);
-		std::string returnbuf = package->getProtocolBuffer();
-		write(sockfd, returnbuf.c_str(), returnbuf.length());
+	PackDataReader * reader = filter->getPackDataReader();
+	if (!reader) {
+		return -1;
 	}
+	reader->addBuffer((unsigned char *)buf, len);
+	VncDataPackage *package;
+	while (reader->getPackQueue(&package)) {
+		VncDataPackage * package = new VncDataPackage(
+				(const unsigned char*) buf, len);
+		if (!package) {
+			LOG_DEBUG("socket fd = %d package data is Error", sockfd);
+			return -1;
+		}
+		unsigned int source = package->getSource();
+		unsigned int target = package->getTarget();
+		unsigned int command_id = package->getCommandId();
+		LOG_DEBUG( "socket fd = %d source = 0x%08x; target = 0x%08x, command id =  0x%08x", sockfd, source, target, command_id);
+		if (SERVER_ID != source) {
+			package->setSourceAndTarget(target, source);
+			std::string returnbuf = package->getProtocolBuffer();
+			write(sockfd, returnbuf.c_str(), returnbuf.length());
+		}
+		delete package;
+		package = NULL;
+	}
+
 	return 0;
 
 }
