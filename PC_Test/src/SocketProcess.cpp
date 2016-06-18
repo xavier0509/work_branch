@@ -171,6 +171,19 @@ void SocketProcess::handshake(int sockfd) {
 	writeMsg(sockfd, buf, strlen(buf));
 }
 
+int SocketProcess::acceptConnect(int sockfd)
+{
+	ConnectFilter *filter = new ConnectFilter(sockfd);
+	ConnectFilterManager::GetInstance()->insertConnFilterMap(sockfd, filter);
+	return 0;
+}
+
+int SocketProcess::disconnect(int sockfd)
+{
+	ConnectFilterManager::GetInstance()->removeConnFilter(sockfd);
+	return 0;
+}
+
 int SocketProcess::writeMsg(int sockfd, char *buf, int len)
 {
 	int ret = write(sockfd, buf, len);

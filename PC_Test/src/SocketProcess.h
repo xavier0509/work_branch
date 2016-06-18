@@ -18,6 +18,9 @@ public:
 private:
 	void handshake(int sockfd);
 
+	int acceptConnect(int sockfd);
+	int disconnect(int sockfd);
+
 	int writeMsg(int sockfd, char *buf, int len);
 	int writeMsgToWebSocket(int sockfd, char *buf, int len);
 
