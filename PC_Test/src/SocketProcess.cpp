@@ -240,6 +240,7 @@ int SocketProcess::do_parsebuffer(int sockfd, char *buf, int len)
 		int rsv = buf[buffer_begin + 0] & 0x70;
 		int isMask = (buf[buffer_begin + 1] >> 7) & 1;
 		int payload_len = (buf[buffer_begin + 1] & 0x7f);
+
 		if (1 != fin) {
 
 		}
@@ -257,11 +258,6 @@ int SocketProcess::do_parsebuffer(int sockfd, char *buf, int len)
 		} else if (127 == payload_len) {
 			heade_length += 8;
 			payload_len = ((buf[buffer_begin + 2] & 0xff) << 8) + (buf[buffer_begin + 3] & 0xff);
-		}else {
-
-			buffer_begin += (heade_length);
-			left_len -= (heade_length);
-			continue;
 		}
 
 		char mask[4];
